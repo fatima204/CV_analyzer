@@ -343,7 +343,7 @@ for i, name in enumerate(names):
     cv = generate_cv(name, ethnicity, skills_str, experience, high_school_str, bachelor_str, master_str, projects_str,
                      achievements_str)
 
-    filename = os.path.join(output_directory, f"cv_{i + 1480}.pdf")
+    filename = os.path.join(output_directory, f"cv_{i}.pdf")
     c = canvas.Canvas(filename, pagesize=letter)
 
     y_position = 750

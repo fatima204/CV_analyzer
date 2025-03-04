@@ -53,8 +53,8 @@ def process_pdfs_in_folder(folder_path, output_csv):
 
 
 # Beispielaufruf
-folder_path = "generated_biased_cvs"  # Ersetze mit deinem Ordnerpfad
-output_csv = "output_male.csv"
+folder_path = "../generated_biased_cvs"  # Ersetze mit deinem Ordnerpfad
+output_csv = "output_resume_3.csv"
 process_pdfs_in_folder(folder_path, output_csv)
 print(f"CSV-Datei wurde erstellt und nach Dateinamen sortiert: {output_csv}")
 

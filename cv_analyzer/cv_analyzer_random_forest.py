@@ -30,7 +30,7 @@ def clean_text(text):
     return ' '.join(words)
 
 
-def preprocess_data(folder_path, training=True, vectorizer=None, labels=None):
+def preprocess_data(folder_path, training=True, vectorizer=None):
     texts, file_names = [], []
 
     for filename in os.listdir(folder_path):
@@ -53,10 +53,10 @@ def preprocess_data(folder_path, training=True, vectorizer=None, labels=None):
 
 def train_model(csv_file, folder_path):
     # for resume.csv & resume2.csv
-    # df = pd.read_csv(csv_file, encoding='windows-1252', delimiter=';')
+    df = pd.read_csv(csv_file, encoding='windows-1252', delimiter=';')
 
     # for biased_resume.csv
-    df = pd.read_csv(csv_file, encoding='ISO-8859-1', delimiter=';')
+    # df = pd.read_csv(csv_file, encoding='ISO-8859-1', delimiter=';')
 
     df["resume_text"] = df["Filename"].apply(lambda x: clean_text(extract_resume_text(os.path.join(folder_path, x))))
 
@@ -90,7 +90,7 @@ def predict_new_resumes(folder_path):
     X, file_names = preprocess_data(folder_path, training=False, vectorizer=vectorizer)
     predictions = model.predict_proba(X)
 
-    scores = np.mean([pred[:, 1] for pred in predictions], axis=0)
+    scores = np.mean([pred[:, 1] if pred.shape[1] > 1 else pred[:, 0] for pred in predictions], axis=0)
 
     results = pd.DataFrame({'Filename': file_names, 'Predicted_Score': scores})
     results = results.sort_values(by='Predicted_Score', ascending=False)
